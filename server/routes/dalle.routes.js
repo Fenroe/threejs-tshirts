@@ -20,9 +20,6 @@ dalleRoutes.route('/').post(async (req, res) => {
     try {
         const { prompt } = req.body
 
-        console.log(prompt)
-
-        console.log(process.env.OPENAI_API_KEY)
         const response = await openai.createImage({
             prompt,
             n: 1,
@@ -30,13 +27,10 @@ dalleRoutes.route('/').post(async (req, res) => {
             response_format: 'b64_json',
         })
 
-        console.log(response)
-
         const image = response.data.data[0].b64_json;
 
         res.status(200).json({ photo: image })
     } catch(err) {
-        console.log(err.message)
         res.status(500).json({ message: 'Something went wrong' })
     }
 })
